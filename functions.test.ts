@@ -7,6 +7,8 @@ const {shuffleArray} = require('./utils')
 //     expect(2).toBe(2);
 // })
 // test('properly shows array', () => {
-//         let array = [1, 2, 3, 4]
+//         let array = []
 //         expect(shuffleArray(array)).toBe(array)
 // })
+
+// test(shuffleArray

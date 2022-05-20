@@ -36,6 +36,7 @@ app.get('/api/robots', (req, res) => {
     try {
         res.status(200).send(botsArr)
     } catch (error) {
+        rollbar.error('Did not retrieve cards')
         console.log('ERROR GETTING BOTS', error)
         res.sendStatus(400)
     }
@@ -60,6 +61,7 @@ app.post('/api/duel', (req, res) => {
         let {compDuo, playerDuo} = req.body
 
         // adding up the computer player's total health and attack damage
+
         let compHealth = compDuo[0].health + compDuo[1].health
         let compAttack = compDuo[0].attacks[0].damage + compDuo[0].attacks[1].damage + compDuo[1].attacks[0].damage + compDuo[1].attacks[1].damage
         
@@ -73,9 +75,11 @@ app.post('/api/duel', (req, res) => {
 
         // comparing the total health to determine a winner
         if (compHealthAfterAttack > playerHealthAfterAttack) {
+            rollbar.info('Computer wins')
             playerRecord.losses++
             res.status(200).send('You lost!')
         } else {
+            rollbar.info('Player won')
             playerRecord.losses++
             res.status(200).send('You won!')
         }
